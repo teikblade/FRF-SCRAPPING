@@ -108,40 +108,6 @@ const getAirbnbArrayData = getDataUrlAirbnb(urlAirbnb, 2).then( content =>{
 })
 
 getAirbnbArrayData.then(data =>{
-    //UPLOAD FILE TO STRAPI
-    for (let index = 0; index < data.length; index++) {
-        //PREPARE NEW OBJECT
-        let sendData = { 
-                title: data[index].title,
-                url: data[index].href,
-                price: data[index].mount,
-                features: String(data[index].addons),
-                content: String(data[index].caption),
-                rating: data[index].rating,
-                image: data[index].picture,
-                latitudelongitude: data[index].lat_long
-        }
-        //CREATE FORMDATA
-        let formData = new FormData()
-        formData.set('data', JSON.stringify(sendData))
-        const encoder = new FormDataEncoder(formData)
-        //SEND FORMDATA TO STRAPI
-        fetch('http://localhost:1337/api/hotels', {
-            method: "post",
-            headers: encoder.headers,
-            body: Readable.from(encoder)
-        })
-        .then(response => {
-            if(response.status === 200){
-                console.log('Hotel '+data[index].title+' Submit')
-            }else{
-                console.log('Error')
-            }
-        })
-        .catch(error =>{
-            console.log(error)
-        })
-    }
     //GET DATE
     let date = new Date()
     let getDay = date.getDay()
