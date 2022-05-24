@@ -14,20 +14,20 @@ WTHR.COM DATA
 
 const url = `https://www.wthr.com/local`
 
-async function getDataUrlIndeed(URL){
+async function getDataUrlNews(URL){
     let data = ''
     const response = await fetch(URL)
     data = response.text()
     return data
 }
-getDataUrlIndeed(url).then( content =>{ 
+getDataUrlNews(url).then( content =>{ 
     //LOAD DATA OF DOCUMENT INDEX.HTML
     const $ = cheerio.load(content)
     let hrefPost
     $('div.grid__main .grid__cell_columns_1 .grid__module .grid__module-sizer_name_headline-list .headline-list ul li').each((index, el)=>{
         //GET URL POST
         hrefPost = $(el).find('a').attr('href')
-        let getPostData = getDataUrlIndeed(hrefPost).then( contentPost =>{ 
+        let getPostData = getDataUrlNews(hrefPost).then( contentPost =>{ 
             //PREPARE VARIABLES
             let title, extract, image, thumbnail, objPost
             //LOAD DATA OF POST
